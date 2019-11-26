@@ -36,6 +36,22 @@ object sorting {
 
   }
 
+
+  def bubbleSrt[T <% Ordered[T]](xs:List[T]):List[T] = {
+
+    def sort(source:List[T] , result:List[T]) = {
+      if( source.isEmpty) result
+      else bubble ( source, Nil, result)
+    }
+
+    def bubble(source: List[T], tempList:List[T], result: List[T]):List[T] = source match{
+      case h1::h2::t =>
+        if( h1>h2) bubble(h1::t, h2::tempList,result)
+        else bubble(h2::t, h1::tempList,result)
+      case h1::t => sort(tempList, h1::result)
+    }
+    sort(xs,Nil)
+  }
   def isort(xs: List[Int]): List[Int] =
     if (xs.isEmpty) Nil
     else insert(xs.head, isort(xs.tail))
@@ -66,13 +82,25 @@ object sorting {
 
   }
 
+  def quickSort (xs:List[Int]) :List[Int] = {
+    if(xs.length<2) return xs
+    val pivotPos  = xs.length/2
+    val pivot =xs.head
+
+    val (left, right) = xs.partition(_< pivot)
+
+//    println(left,pivot,right.tail) // debug to help make the algo clearer.
+    quickSort(left) :::(pivot)::quickSort(right.tail)}
+
 }
 
   object main extends  App{
 
+    val li=List(3,8,2,5,1,4,7,6)                    //> li  : List[Int] = List(3, 8, 2, 5, 1, 4, 7, 6)
 
+    println(sorting.quickSort(li).mkString(""))
     val arry = Array (2,4,1,6,2,8)
-    print(sorting.bubbleSort(arry).mkString(""))
+//    print(sorting.bubbleSort(arry).mkString(""))
 
   }
 
