@@ -42,4 +42,21 @@ def sum[a](xs :List[a])(implicit m:Monoid[a]) :a =
   if(xs.isEmpty) m.unit
   else m.add(xs.head, sum(xs.tail)(m))
 
+//signature of partia; Funtion
+//  has apply and isDefinedAt
+//  trait PartialFunction [-A , +B] extends  (A) => B
 
+val divide = new PartialFunction[Int, Int] {
+  def apply(x:Int) = 42 /x
+
+  override def isDefinedAt(x: Int): Boolean = x ! = 0
+
+
+}
+
+val divide2: PartialFunction[Int, Int] = {
+  case d: Int if d != 0 => 42 / d
+}
+
+//Chain partial Functions
+//orElse andThen
